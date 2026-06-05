@@ -3,10 +3,10 @@ services:
     image: postgres:15-alpine
     container_name: api-monitoring-postgres
     environment:
-      - POSTGRES_DB: api_monitoring
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: password
-      - POSTGRES_INITDB_ARGS: --encoding=UTF-8
+      - POSTGRES_DB=api_monitoring
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
     ports:
       - "5432:5432"
     volumes:
@@ -29,7 +29,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data: /data/db
+      - mongo_data:/data/db
     networks:
       - api-monitoring-network
     restart: unless-stopped
@@ -76,16 +76,16 @@ services:
     depends_on:
       - postgres
 
-  volumes:
-    postgres_data:
-      driver: local
-    rabbitmq_data:
-      driver: local
-    mongo_data:
-      driver: local
-    pgadmin_data:
-      driver: local
+volumes:
+  postgres_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  mongo_data:
+    driver: local
+  pgadmin_data:
+    driver: local
   
-  networks:
-    api-monitoring-network:
-      driver: bridge
+networks:
+  api-monitoring-network:
+    driver: bridge
